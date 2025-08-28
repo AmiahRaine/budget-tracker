@@ -1,16 +1,19 @@
-import { useState } from 'react'
 import { Expenses } from './Expenses'
+import { ExpenseModalProvider} from './ExpenseModalContext.jsx';
+import { ExpenseModal } from './Modal.jsx';
 
 function App() {
-  const [count, setCount] = useState(0)
+    
 
-  return (
-    <>
-      <div>
-        <Expenses />
-       </div>
-    </>
-  )
+    return (
+        <>
+             <ExpenseModalProvider>
+                    
+                    <ExpenseModal />
+                    <Expenses />
+            </ExpenseModalProvider>
+       </>
+    )
 }
 
 export default App
