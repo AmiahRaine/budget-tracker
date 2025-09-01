@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { getExpenses, patchExpense, getExpense } from "./expenses-crud";
+import { getExpenses, patchExpense, postExpense, getExpense } from "./expenses-crud";
 import { useUpdateCurrentExpense, useUpdateExpenseModalVisible } from "./ExpenseModalContext.jsx";
 import React, { useRef } from "react";
 
@@ -50,21 +50,62 @@ export function PatchExpense({ id }) {
 
             <form onSubmit={handleSubmit} ref={formData}>
                 <input type="text" name="name" defaultValue={expense.name} />
-                <input type="text" name="amount" defaultValue={expense.amount} />
+                <input type="number" step="0.01" placeholder="0.00" name="amount" defaultValue={expense.amount} />
                 <input type="text" name="counterparty" defaultValue={expense.counterparty} />
+                <input type="datetime-local" name="time" defaultValue={expense.time} required />
                 <select name="category" defaultValue={expense.category} >
-                    <option value="FOOD">Food</option>
-                    <option value="CLOTHING">Clothing</option>
-                    <option value="HOUSING">Housing</option>
-                    <option value="UTILITIES">Utilities</option>
-                    <option value="ENTERTAINMENT">Entertainment</option>
-                    <option value="TRANSPORT">Transport</option>
-                    <option value="BUSINESS">Business</option>
-                    <option value="EDUCATION">Education</option>
-                    <option value="MEDICINE">Medicine</option>
-                    <option value="PERSONAL_CARE">Personal Care</option>
-                    <option value="PLUSHIES">Plushies</option>
-                    <option value="OTHER">Other</option>
+                    <CategoryOptions />
+                </select>
+
+                {/* Do a patch / post here */}
+                <button type="submit">Save & Close</button>
+                
+                {/* Close without saving */}
+                <button onClick={() => setModalVisible(false)}>Close</button>
+            </form>
+        </>
+    );
+}
+
+export function PostExpense() {
+
+    const setModalVisible = useUpdateExpenseModalVisible();
+    const formData = useRef(null);
+    const queryClient = useQueryClient();
+
+    const {
+        status,
+        error,
+        mutate
+    } = useMutation({
+        mutationFn: ({patch}) => postExpense(patch),
+        onSuccess: newData => {
+            // Update cache of get one expense
+            queryClient.setQueryData(["expenses", id], newData); 
+             // Refetch the list to update data
+            queryClient.invalidateQueries(["expenses"]);
+            // Close the modal
+            setModalVisible(false);
+        }
+    });
+    
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        const patchData = Object.fromEntries(new FormData(formData.current).entries());
+        console.log(patchData);
+        mutate({patch: patchData});
+    }
+
+    return (
+        <>
+
+            <form onSubmit={handleSubmit} ref={formData}>
+                <input type="text" name="name" required />
+                <input type="number" step="0.01" placeholder="0.00" name="amount" required />
+                <input type="text" name="counterparty" required />
+                <input type="datetime-local" name="time" required />
+                <select name="category" required >
+                    <CategoryOptions />
                 </select>
 
                 {/* Do a patch / post here */}
@@ -140,6 +181,25 @@ function ExpensesList({expenses}) {
                     })}
                 </tbody>
             </table>
+        </>
+    );
+}
+
+function CategoryOptions() {
+    return (
+        <>
+            <option value="FOOD">Food</option>
+            <option value="CLOTHING">Clothing</option>
+            <option value="HOUSING">Housing</option>
+            <option value="UTILITIES">Utilities</option>
+            <option value="ENTERTAINMENT">Entertainment</option>
+            <option value="TRANSPORT">Transport</option>
+            <option value="BUSINESS">Business</option>
+            <option value="EDUCATION">Education</option>
+            <option value="MEDICINE">Medicine</option>
+            <option value="PERSONAL_CARE">Personal Care</option>
+            <option value="PLUSHIES">Plushies</option>
+            <option value="OTHER">Other</option>
         </>
     );
 }

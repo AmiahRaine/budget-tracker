@@ -7,18 +7,36 @@ export function ExpenseModal() {
     const currentId = useCurrentExpense();
     const expenseModalVisible = useExpenseModalVisible();
 
-    if (expenseModalVisible) return (
-        <>
-            <div className="background">
-                <div className="modal-surface">
-                    <p>HI I AM THE MODAL {currentId}</p>
+    if (expenseModalVisible) {
+        // If there is an id do a PATCH
+        if (currentId !== null) return (
+            <>
+                <div className="background">
+                    <div className="modal-surface">
+                        <p>HI I AM THE MODAL {currentId}</p>
 
-                    <PatchExpense id={currentId} />
+                        <PatchExpense id={currentId} />
 
+                    </div>
                 </div>
-            </div>
-        </>
-    );
+            </>
+        );
+        // If no id do a POST
+        else return (
+            <>
+                <div className="background">
+                    <div className="modal-surface">
+                        <p>HI I AM THE MODAL POST</p>
+
+                        <PostExpense />
+
+                    </div>
+                </div>
+            </>
+        );
+    }
+
+    return null;
 }
 
 

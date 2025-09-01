@@ -6,6 +6,8 @@ import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
+import java.time.temporal.TemporalUnit;
 
 
 @Entity
@@ -38,7 +40,7 @@ public class Expense {
         this.amount = amount;
         this.counterparty = counterparty;
         this.category = category;
-        this.time = LocalDateTime.now();
+        this.time = LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS);
     }
 
     @PrePersist
@@ -100,7 +102,7 @@ public class Expense {
 
 
     public void setTime(LocalDateTime time) {
-        this.time = time;
+        this.time = time.truncatedTo(ChronoUnit.SECONDS);
     }
 
     public void setCounterparty(String counterparty) {
