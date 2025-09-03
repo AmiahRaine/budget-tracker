@@ -1,5 +1,5 @@
 import { useCurrentExpense, useExpenseModalVisible } from './ExpenseModalContext';
-import { PatchExpense } from './Expenses';
+import { PatchExpense, PostExpense } from './Expenses';
 import React from 'react';
 import './styles/modal.css'
 
