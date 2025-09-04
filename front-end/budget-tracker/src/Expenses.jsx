@@ -1,7 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { getExpenses, patchExpense, postExpense, getExpense } from "./expenses-crud";
+import { getExpenses, patchExpense, postExpense, getExpense, deleteExpense } from "./expenses-crud";
 import { useUpdateCurrentExpense, useUpdateExpenseModalVisible } from "./ExpenseModalContext.jsx";
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 
 /**
  * @param {*} id The id of the expense to get.
@@ -12,6 +12,40 @@ export function useGetExpenseData(id) {
         queryKey: ["expense", id],
         queryFn: () => getExpense(id)
     });
+}
+
+/**
+ * A button for deleting a single expense. Invalidates the expense list cache when a successful delete happens.
+ * @param {*} id The id of the expense to delete.
+ * @returns A button that when pressed, deletes an expense.
+ */
+export function DeleteExpenseButton({ id }) {
+
+    const setModalVisible = useUpdateExpenseModalVisible();
+    const queryClient = useQueryClient();
+    const [confirm, setConfirm] = useState(false);
+
+    const {
+        status,
+        error,
+        mutate
+    } = useMutation({
+        mutationFn: () => deleteExpense(id),
+        onSuccess: () => {
+             // Refetch the list to update data
+            queryClient.invalidateQueries(["expenses"]);
+            // Close the modal
+            setModalVisible(false);
+        }
+    });
+
+    // Make the user double click the delete button to prevent accidental deletes
+    if (confirm === false) return (
+        <button onClick={() => setConfirm(true)}>Delete</button>
+    );
+    return (
+        <button onClick={mutate}>Confirm Delete</button>
+    );
 }
 
 /**
