@@ -7,12 +7,12 @@ function App() {
 
     return (
         <>
-             <ExpenseModalProvider>
+            <ExpenseModalProvider>
                     
                     <ExpenseModal />
                     <Expenses />
             </ExpenseModalProvider>
-       </>
+        </>
     )
 }
 
