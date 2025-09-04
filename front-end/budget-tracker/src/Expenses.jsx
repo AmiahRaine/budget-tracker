@@ -136,7 +136,7 @@ export function Expenses() {
     return (
         <>
             <h1>Expenses</h1>
-            <button onClick={() => {showModal(true); setId(null)}}>Edit</button>
+            <button onClick={() => {showModal(true); setId(null)}}>Create</button>
             <ExpensesList expenses={expenses}/>
         </>
     );
