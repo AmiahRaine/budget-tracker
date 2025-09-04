@@ -78,10 +78,8 @@ export function PostExpense() {
         error,
         mutate
     } = useMutation({
-        mutationFn: ({patch}) => postExpense(patch),
-        onSuccess: newData => {
-            // Update cache of get one expense
-            queryClient.setQueryData(["expenses", id], newData); 
+        mutationFn: ({post}) => postExpense(post),
+        onSuccess: () => {
              // Refetch the list to update data
             queryClient.invalidateQueries(["expenses"]);
             // Close the modal
@@ -91,9 +89,9 @@ export function PostExpense() {
     
     const handleSubmit = (e) => {
         e.preventDefault();
-        const patchData = Object.fromEntries(new FormData(formData.current).entries());
-        console.log(patchData);
-        mutate({patch: patchData});
+        const postData = Object.fromEntries(new FormData(formData.current).entries());
+        console.log(postData);
+        mutate({post: postData});
     }
 
     return (
@@ -120,6 +118,9 @@ export function PostExpense() {
 
 
 export function Expenses() {
+    const showModal = useUpdateExpenseModalVisible();
+    const setId = useUpdateCurrentExpense();
+
     const {
         status,
         error,
@@ -135,6 +136,7 @@ export function Expenses() {
     return (
         <>
             <h1>Expenses</h1>
+            <button onClick={() => {showModal(true); setId(null)}}>Edit</button>
             <ExpensesList expenses={expenses}/>
         </>
     );
