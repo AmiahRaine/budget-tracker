@@ -3,6 +3,10 @@ import { getExpenses, patchExpense, postExpense, getExpense } from "./expenses-c
 import { useUpdateCurrentExpense, useUpdateExpenseModalVisible } from "./ExpenseModalContext.jsx";
 import React, { useRef } from "react";
 
+/**
+ * @param {*} id The id of the expense to get.
+ * @returns a useQuery() for getting a single expense.
+ */
 export function useGetExpenseData(id) {
     return useQuery({
         queryKey: ["expense", id],
@@ -10,6 +14,11 @@ export function useGetExpenseData(id) {
     });
 }
 
+/**
+ * Modifies a single expense. Invalidates the expense list cache when a successful patch happens.
+ * @param {*} id The id of the expense to modify.
+ * @returns Form for editing the expense.
+ */
 export function PatchExpense({ id }) {  
 
     const setModalVisible = useUpdateExpenseModalVisible();
@@ -67,6 +76,10 @@ export function PatchExpense({ id }) {
     );
 }
 
+/**
+ * Posts a new expense to the back-end. Invalidates expense list cache when successful.
+ * @returns Form for creating the expense.
+ */
 export function PostExpense() {
 
     const setModalVisible = useUpdateExpenseModalVisible();
@@ -116,7 +129,10 @@ export function PostExpense() {
     );
 }
 
-
+/**
+ * Primary function for expense CRUD.
+ * @returns A list of expenses (and the POST and PATCH buttons).
+ */
 export function Expenses() {
     const showModal = useUpdateExpenseModalVisible();
     const setId = useUpdateCurrentExpense();
@@ -143,7 +159,10 @@ export function Expenses() {
 
 }
 
-
+/**
+ * @param {*} expenses List of expenses to display.
+ * @returns List of expenses formatted into a table.
+ */
 function ExpensesList({expenses}) {
     const showModal = useUpdateExpenseModalVisible();
     const setId = useUpdateCurrentExpense();
@@ -187,6 +206,10 @@ function ExpensesList({expenses}) {
     );
 }
 
+/**
+ * Options for the category of the expense.
+ * @returns Numerous options for a select input tag.
+ */
 function CategoryOptions() {
     return (
         <>
