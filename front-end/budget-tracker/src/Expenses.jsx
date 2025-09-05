@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { getExpenses, patchExpense, postExpense, getExpense, deleteExpense } from "./expenses-crud";
+import { getExpensesPaged, patchExpense, postExpense, getExpense, deleteExpense } from "./expenses-crud";
 import { useUpdateCurrentExpense, useUpdateExpenseModalVisible } from "./ExpenseModalContext.jsx";
 import React, { useRef, useState } from "react";
 
@@ -170,14 +170,16 @@ export function PostExpense() {
 export function Expenses() {
     const showModal = useUpdateExpenseModalVisible();
     const setId = useUpdateCurrentExpense();
+    const [page, setPage] = useState(0);
+    const pageSize = 1;
 
     const {
         status,
         error,
         data: expenses
     } = useQuery({
-        queryKey: ["expenses"],
-        queryFn: getExpenses
+        queryKey: ["expenses", page, pageSize],
+        queryFn: () => getExpensesPaged(page, pageSize)
     });
 
     if (status === "loading") return <h1>Loading...</h1>;
@@ -188,6 +190,12 @@ export function Expenses() {
             <h1>Expenses</h1>
             <button onClick={() => {showModal(true); setId(null)}}>Create</button>
             <ExpensesList expenses={expenses}/>
+
+            
+            {(page > 0) && <button onClick={() => {setPage(prev => prev - 1)}}>Prev</button>}
+            
+
+            {isNextAvailable(expenses) && <button onClick={() => setPage(prev => prev + 1)}>Next</button>}
         </>
     );
 
@@ -261,4 +269,13 @@ function CategoryOptions() {
             <option value="OTHER">Other</option>
         </>
     );
+}
+
+/**
+ * @param {*} expenses Results of paginated fetch query 
+ * @returns True if there are more pages, false otherwise.
+ */
+function isNextAvailable(expenses) {
+    if (expenses?._links?.next) return true;
+    return false;
 }

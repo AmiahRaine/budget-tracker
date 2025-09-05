@@ -7,11 +7,19 @@ export function postExpense(patch) {
 
 // Read
 export function getExpenses() {
-    return axios.get("http://localhost:8080/api/expenses", { params: { _sort: "name"} }).then(res => res.data);
+    return axios.get("http://localhost:8080/api/expenses").then(res => res.data);
+}
+
+export function getExpensesPaged(page, size) {
+    return axios.get(`http://localhost:8080/api/expenses/paged?page=${page}&size=${size}`).then(res => res.data);
 }
 
 export function getExpense(id) {
     return axios.get(`http://localhost:8080/api/expenses/${id}`).then(res => res.data);
+}
+
+export function getExpenseBalance() {
+    return axios.get("http://localhost:8080/api/expenses/total").then(res => res.data);
 }
 
 // Patch
