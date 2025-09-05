@@ -189,13 +189,12 @@ export function Expenses() {
         <>
             <TotalExpenseBalance />
             <h1>Expenses</h1>
+
             <button onClick={() => {showModal(true); setId(null)}}>Create</button>
             <ExpensesList expenses={expenses}/>
 
-            
+            {/* Pagination buttons */}
             {(page > 0) && <button onClick={() => {setPage(prev => prev - 1)}}>Prev</button>}
-            
-
             {isNextAvailable(expenses) && <button onClick={() => setPage(prev => prev + 1)}>Next</button>}
         </>
     );
