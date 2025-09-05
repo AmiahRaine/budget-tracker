@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { getExpensesPaged, patchExpense, postExpense, getExpense, deleteExpense } from "./expenses-crud";
+import { getExpensesPaged, patchExpense, postExpense, getExpense, deleteExpense, getExpenseBalance } from "./expenses-crud";
 import { useUpdateCurrentExpense, useUpdateExpenseModalVisible } from "./ExpenseModalContext.jsx";
 import React, { useRef, useState } from "react";
 
@@ -187,6 +187,7 @@ export function Expenses() {
 
     return (
         <>
+            <TotalExpenseBalance />
             <h1>Expenses</h1>
             <button onClick={() => {showModal(true); setId(null)}}>Create</button>
             <ExpensesList expenses={expenses}/>
@@ -244,6 +245,27 @@ function ExpensesList({expenses}) {
                     })}
                 </tbody>
             </table>
+        </>
+    );
+}
+
+export function TotalExpenseBalance() {
+
+    const {
+        status,
+        error,
+        data: total
+    } = useQuery({
+        queryKey: ["expenses-total",],
+        queryFn: getExpenseBalance
+    });
+
+    if (status === "loading") return <h1>Loading...</h1>;
+    if (status === "error") return <h1>{JSON.stringify(error)}</h1>;
+
+    return (
+        <>
+            {total?.total}
         </>
     );
 }
