@@ -1,6 +1,7 @@
 package dev.amiah.budget_tracker.controller;
 
 import dev.amiah.budget_tracker.assembler.ExpenseModelAssembler;
+import dev.amiah.budget_tracker.dto.TotalBalanceObject;
 import dev.amiah.budget_tracker.exception.ExpenseNotFoundException;
 import dev.amiah.budget_tracker.model.Expense;
 import dev.amiah.budget_tracker.repository.ExpenseRepository;
@@ -15,6 +16,7 @@ import org.springframework.hateoas.PagedModel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import static dev.amiah.budget_tracker.util.ControllerUtil.setIfNotNull;
@@ -50,10 +52,15 @@ public class ExpenseController {
         Pageable pageable = PageRequest.of(page, size);
         Page<Expense> pagedExpenses = repository.findAllByOrderByTimeDesc(pageable);
 
-
-
         return pagedAssembler.toModel(pagedExpenses, assembler);
+    }
 
+    /**
+     * @return A sum of all {@code Expense} amount values.
+     */
+    @GetMapping("/api/expenses/total")
+    public TotalBalanceObject getTotalBalance() {
+        return new TotalBalanceObject(repository.getTotalBalance());
     }
 
     // Basic CRUD operations
