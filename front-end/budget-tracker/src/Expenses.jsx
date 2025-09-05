@@ -171,7 +171,7 @@ export function Expenses() {
     const showModal = useUpdateExpenseModalVisible();
     const setId = useUpdateCurrentExpense();
     const [page, setPage] = useState(0);
-    const pageSize = 1;
+    const pageSize = 20;
 
     const {
         status,
