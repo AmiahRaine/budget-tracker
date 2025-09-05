@@ -4,9 +4,14 @@ import dev.amiah.budget_tracker.assembler.ExpenseModelAssembler;
 import dev.amiah.budget_tracker.exception.ExpenseNotFoundException;
 import dev.amiah.budget_tracker.model.Expense;
 import dev.amiah.budget_tracker.repository.ExpenseRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PagedResourcesAssembler;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.IanaLinkRelations;
+import org.springframework.hateoas.PagedModel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,11 +26,37 @@ public class ExpenseController {
 
     private final ExpenseRepository repository;
     private final ExpenseModelAssembler assembler;
+    private final PagedResourcesAssembler<Expense> pagedAssembler;
 
-    public ExpenseController(ExpenseRepository repository, ExpenseModelAssembler assembler) {
+    public ExpenseController(ExpenseRepository repository, ExpenseModelAssembler assembler,
+                             PagedResourcesAssembler<Expense> pagedAssembler)
+    {
         this.repository = repository;
         this.assembler = assembler;
+        this.pagedAssembler = pagedAssembler;
     }
+
+    /**
+     * Retrieves expenses ordered by time descending in pages of a specified size.
+     *
+     * @param page Which page of entries should be retrieved
+     * @param size The number of entries per page
+     * @return A page of {@code Expense}s.
+     */
+    @GetMapping("/api/expenses/paged")
+    public PagedModel<EntityModel<Expense>> findExpensesPaged(@RequestParam(value = "page", defaultValue = "0") int page,
+                                                              @RequestParam(value = "size", defaultValue = "20") int size)
+    {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Expense> pagedExpenses = repository.findAllByOrderByTimeDesc(pageable);
+
+
+
+        return pagedAssembler.toModel(pagedExpenses, assembler);
+
+    }
+
+    // Basic CRUD operations
 
     /**
      * @return All {@code Expense}s in the database.
