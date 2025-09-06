@@ -6,3 +6,85 @@
 .confirm-delete-button {
     background-color:rgb(108, 13, 13);
 }
+
+.all-expense-info {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.expense-header {
+    position: sticky;
+    height: 10vh;
+    top: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding-left: 7rem;
+    padding-right: 7rem;
+
+    background-color: lavender;
+    border-bottom: 0.3rem solid purple;
+}
+
+.expense-list {
+    display: flex;
+    flex-direction: column;
+    
+}
+
+.pagination-buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+
+    gap: 0.25rem;
+
+    width: 100%;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.expenses-table {
+    overflow-y: scroll;
+
+    border-collapse: collapse;
+}
+
+.expenses-table thead {
+    position: sticky;
+    top: 10vh;
+
+    background-color: rgb(83, 124, 160);
+}
+
+.expenses-table td {
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+.expenses-table .edit-td {
+    text-align: center;
+}
+
+.expenses-table .odd-row {
+    background-color: aqua;
+}
+
+.expenses-table .odd-row td:nth-child(odd) {
+    background-color: goldenrod;
+}
+
+.expenses-table .even-row {
+    background-color: aquamarine;
+}
+
+.expenses-table .even-row td:nth-child(odd) {
+    background-color: gold;
+}
+
+.expenses-table th:nth-child(odd) {
+    background-color: sienna;
+}

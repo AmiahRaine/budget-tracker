@@ -1,6 +1,8 @@
 :root {
   background-color: ivory;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
+  margin: 0;
+  padding: 0;
 }
 
 button {
@@ -21,5 +23,25 @@ button:hover {
 button:focus, button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
   
+}
+
+aside {
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  width: 10vw;
+  height: 100vh;
+  background-color: tomato;
+}
+
+
+main {
+  position: absolute;
+  top: 0;
+  left: 10vw;
+  right: 90vw;
+  width: 90vw;
+  height: 100vh;
 }
 
