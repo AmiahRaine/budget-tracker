@@ -54,3 +54,11 @@ select {
     margin-right: 2.25rem;
     margin-top: 1.5rem;
 }
+
+.delete-button-container {
+    display: flex;
+
+    justify-content: space-between;
+    align-items: center;
+    margin-right: 2.25rem;
+}

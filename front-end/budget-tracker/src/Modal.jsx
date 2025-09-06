@@ -14,8 +14,10 @@ export function ExpenseModal() {
             <>
                 <div className="background">
                     <div className="modal-surface">
-                        
-                        <DeleteExpenseButton id={currentId} />
+                        <span className="delete-button-container">
+                            <h2>Editing Budget Item</h2>
+                            <DeleteExpenseButton id={currentId} />
+                        </span>
 
                         <PatchExpense id={currentId} />
 
@@ -28,9 +30,9 @@ export function ExpenseModal() {
             <>
                 <div className="background">
                     <div className="modal-surface">
+                        <h2>Create Budget Item</h2>
 
                         <PostExpense />
-
                     </div>
                 </div>
             </>

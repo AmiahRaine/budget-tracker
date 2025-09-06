@@ -1,9 +1,6 @@
-.delete-button-container {
-    display: flex;
 
-    justify-content: right;
-    margin-right: 2.25rem;
-    margin-bottom: 1.5rem;
+.delete-button {
+    height: fit-content;
 }
 
 .confirm-delete-button {
