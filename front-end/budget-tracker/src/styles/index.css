@@ -39,6 +39,10 @@ aside {
   text-align: center;
 }
 
+aside p {
+  font-weight: bold;
+}
+
 
 main {
   position: absolute;
