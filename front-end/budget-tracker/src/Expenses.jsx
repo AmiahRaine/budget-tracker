@@ -4,6 +4,14 @@ import { useUpdateCurrentExpense, useUpdateExpenseModalVisible } from "./Expense
 import React, { useRef, useState } from "react";
 import './styles/expenses.css'
 
+// Used to format amounts shown in table and total balance
+const moneyFormatter = Intl.NumberFormat('en-US', {
+        style: "currency",
+        currency: "USD",
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+    });
+
 /**
  * @param {*} id The id of the expense to get.
  * @returns a useQuery() for getting a single expense.
@@ -228,6 +236,19 @@ function ExpensesList({expenses}) {
     const showModal = useUpdateExpenseModalVisible();
     const setId = useUpdateCurrentExpense();
 
+    function formatTableExpense(amount) {
+        let a = moneyFormatter.format(amount);
+
+        if (!a.startsWith('-')) {
+            return (
+                <>
+                    <span className="spacer" />{a}
+                </>
+            );
+        }
+        return (<>{a}</>);
+    }
+
     return (
         <>
             <table className="expenses-table">
@@ -249,7 +270,7 @@ function ExpensesList({expenses}) {
                                     {expense.name}
                                 </td>
                                 <td>
-                                    {expense.amount}
+                                    {formatTableExpense(expense.amount)}
                                 </td>
                                 <td>
                                     {expense.counterpartyText}
@@ -288,7 +309,7 @@ export function TotalExpenseBalance() {
 
     return (
         <>
-            ${total?.total}
+            {moneyFormatter.format(total?.total)}
         </>
     );
 }

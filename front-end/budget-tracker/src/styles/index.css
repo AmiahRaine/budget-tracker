@@ -30,9 +30,13 @@ aside {
   top: 0;
   left: 0;
 
+  padding-top: 1rem;
+
   width: 10vw;
   height: 100vh;
   background-color: tomato;
+
+  text-align: center;
 }
 
 

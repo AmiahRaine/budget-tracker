@@ -7,7 +7,8 @@ function App() {
     return (
         <>
             <aside>
-                
+                <img src='/public/favicon.svg' />
+                <p>Budget Tracker</p>
             </aside>
             <main>
                 <ExpenseModalProvider>

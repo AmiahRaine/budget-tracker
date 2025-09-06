@@ -1,6 +1,6 @@
 .background {
     background-color: rgba(66, 66, 66, 0.8);
-    position: absolute;
+    position: fixed;
     z-index: 10;
 
     left: 0;

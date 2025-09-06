@@ -65,6 +65,11 @@
     padding-right: 1rem;
 }
 
+.spacer {
+    display: inline-block;
+    width: 0.375em; 
+}
+
 .expenses-table .edit-td {
     text-align: center;
 }
