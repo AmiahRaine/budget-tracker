@@ -196,15 +196,25 @@ export function Expenses() {
 
     return (
         <>
-            <TotalExpenseBalance />
-            <h1>Expenses</h1>
+            <div className="all-expense-info">
 
-            <button onClick={() => {showModal(true); setId(null)}}>Create</button>
-            <ExpensesList expenses={expenses}/>
+                <div className="expense-header">
+                    <h1><TotalExpenseBalance /></h1>
 
-            {/* Pagination buttons */}
-            {(page > 0) && <button onClick={() => {setPage(prev => prev - 1)}}>Prev</button>}
-            {isNextAvailable(expenses) && <button onClick={() => setPage(prev => prev + 1)}>Next</button>}
+                    <button onClick={() => {showModal(true); setId(null)}}>Create</button>
+                </div>
+
+                <div className="expense-list">
+                    <ExpensesList expenses={expenses}/>
+
+                    <div className="pagination-buttons">
+                        {/* Pagination buttons */}
+                        {(page > 0) && <button onClick={() => {setPage(prev => prev - 1)}}>Prev</button>}
+                        {isNextAvailable(expenses) && <button onClick={() => setPage(prev => prev + 1)}>Next</button>}
+                    </div>
+
+                </div>
+            </div>
         </>
     );
 
@@ -220,7 +230,7 @@ function ExpensesList({expenses}) {
 
     return (
         <>
-            <table>
+            <table className="expenses-table">
                 <thead>
                     <tr>
                         <th>Name</th>
@@ -228,12 +238,13 @@ function ExpensesList({expenses}) {
                         <th>Counterparty</th>
                         <th>Category</th>
                         <th>Time</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
-                    {expenses?._embedded?.expenseList.map(expense => {
+                    {expenses?._embedded?.expenseList.map((expense, index) => {
                         return (
-                            <tr key={expense.id}>
+                            <tr key={expense.id} className={(index % 2) === 0 ? "even-row" : "odd-row"}>
                                 <td>
                                     {expense.name}
                                 </td>
@@ -249,8 +260,8 @@ function ExpensesList({expenses}) {
                                 <td>
                                     {expense.timeFormatted}
                                 </td>
-                                <td>
-                                    <button onClick={() => {showModal(true); setId(expense.id)}}>Edit</button>
+                                <td className="edit-td">
+                                    <button className="edit-button" onClick={() => {showModal(true); setId(expense.id)}}>Edit</button>
                                 </td>
                             </tr>
                         );
@@ -277,7 +288,7 @@ export function TotalExpenseBalance() {
 
     return (
         <>
-            {total?.total}
+            ${total?.total}
         </>
     );
 }
