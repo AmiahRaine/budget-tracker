@@ -34,7 +34,7 @@ aside {
 
   width: 10vw;
   height: 100vh;
-  background-color: tomato;
+  background: linear-gradient(169deg,rgba(242, 235, 92, 1) 0%, rgba(90, 196, 55, 1) 36%, rgba(44, 143, 80, 1) 91%);
 
   text-align: center;
 }
