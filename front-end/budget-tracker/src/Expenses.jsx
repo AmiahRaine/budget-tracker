@@ -50,10 +50,10 @@ export function DeleteExpenseButton({ id }) {
 
     // Make the user double click the delete button to prevent accidental deletes
     if (confirm === false) return (
-            <button className="delete-button" onClick={() => setConfirm(true)}>Delete</button>
+            <img className="delete-button" src="/public/trash.svg" onClick={() => setConfirm(true)} />
     );
     return (
-            <button className="confirm-delete-button" onClick={mutate}>Confirm Delete</button>
+            <img className="confirm-delete-button" src="/public/trash-delete.svg" onClick={mutate} />
         
     );
 }

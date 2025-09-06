@@ -1,10 +1,10 @@
 
 .delete-button {
-    height: fit-content;
+    height: 2.5rem;
 }
 
 .confirm-delete-button {
-    background-color:rgb(108, 13, 13);
+    height: 2.5rem;
 }
 
 .all-expense-info {
