@@ -145,9 +145,9 @@ export function PostExpense() {
         <>
 
             <form onSubmit={handleSubmit} ref={formData}>
-                <input type="text" name="name" required />
+                <input type="text" name="name" placeholder="Label" required />
                 <input type="number" step="0.01" placeholder="0.00" name="amount" required />
-                <input type="text" name="counterparty" required />
+                <input type="text" name="counterparty" placeholder="Counterparty" required />
                 <input type="datetime-local" name="time" required />
                 <select name="category" required >
                     <CategoryOptions />
@@ -218,6 +218,7 @@ function ExpensesList({expenses}) {
                         <th>Amount</th>
                         <th>Counterparty</th>
                         <th>Category</th>
+                        <th>Time</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -235,6 +236,9 @@ function ExpensesList({expenses}) {
                                 </td>
                                 <td>
                                     {expense.categoryText}
+                                </td>
+                                <td>
+                                    {expense.timeFormatted}
                                 </td>
                                 <td>
                                     <button onClick={() => {showModal(true); setId(expense.id)}}>Edit</button>
