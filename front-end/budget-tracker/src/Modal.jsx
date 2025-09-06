@@ -2,6 +2,7 @@ import { useCurrentExpense, useExpenseModalVisible } from './ExpenseModalContext
 import { DeleteExpenseButton, PatchExpense, PostExpense } from './Expenses';
 import React from 'react';
 import './styles/modal.css'
+import './styles/expenses.css'
 
 export function ExpenseModal() {
     const currentId = useCurrentExpense();

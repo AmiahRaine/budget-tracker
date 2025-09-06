@@ -2,6 +2,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { getExpensesPaged, patchExpense, postExpense, getExpense, deleteExpense, getExpenseBalance } from "./expenses-crud";
 import { useUpdateCurrentExpense, useUpdateExpenseModalVisible } from "./ExpenseModalContext.jsx";
 import React, { useRef, useState } from "react";
+import './styles/expenses.css'
 
 /**
  * @param {*} id The id of the expense to get.
@@ -41,10 +42,14 @@ export function DeleteExpenseButton({ id }) {
 
     // Make the user double click the delete button to prevent accidental deletes
     if (confirm === false) return (
-        <button onClick={() => setConfirm(true)}>Delete</button>
+        <span className="delete-button-container">
+            <button className="delete-button" onClick={() => setConfirm(true)}>Delete</button>
+        </span>
     );
     return (
-        <button onClick={mutate}>Confirm Delete</button>
+        <span className="delete-button-container">
+            <button className="confirm-delete-button" onClick={mutate}>Confirm Delete</button>
+        </span>
     );
 }
 
@@ -90,21 +95,24 @@ export function PatchExpense({ id }) {
 
     if (statusOfGet === "success") return (
         <>
-
             <form onSubmit={handleSubmit} ref={formData}>
-                <input type="text" name="name" defaultValue={expense.name} />
-                <input type="number" step="0.01" placeholder="0.00" name="amount" defaultValue={expense.amount} />
-                <input type="text" name="counterparty" defaultValue={expense.counterparty} />
-                <input type="datetime-local" name="time" defaultValue={expense.time} required />
-                <select name="category" defaultValue={expense.category} >
-                    <CategoryOptions />
-                </select>
+                <div className="input-fields">
+                    <input type="text" name="name" defaultValue={expense.name} />
+                    <input type="number" step="0.01" placeholder="0.00" name="amount" defaultValue={expense.amount} />
+                    <input type="text" name="counterparty" defaultValue={expense.counterparty} />
+                    <input type="datetime-local" name="time" defaultValue={expense.time} required />
+                    <select name="category" defaultValue={expense.category} >
+                        <CategoryOptions />
+                    </select>
+                </div>
 
-                {/* Do a patch / post here */}
-                <button type="submit">Save & Close</button>
-                
-                {/* Close without saving */}
-                <button onClick={() => setModalVisible(false)}>Close</button>
+                <div className="form-buttons">
+                    {/* Do a patch / post here */}
+                    <button type="submit">Save & Close</button>
+                    
+                    {/* Close without saving */}
+                    <button onClick={() => setModalVisible(false)}>Close</button>
+                </div>
             </form>
         </>
     );
@@ -145,19 +153,23 @@ export function PostExpense() {
         <>
 
             <form onSubmit={handleSubmit} ref={formData}>
-                <input type="text" name="name" placeholder="Label" required />
-                <input type="number" step="0.01" placeholder="0.00" name="amount" required />
-                <input type="text" name="counterparty" placeholder="Counterparty" required />
-                <input type="datetime-local" name="time" required />
-                <select name="category" required >
-                    <CategoryOptions />
-                </select>
+                <div className="input-fields">
+                    <input type="text" name="name" placeholder="Label" required />
+                    <input type="number" step="0.01" placeholder="0.00" name="amount" required />
+                    <input type="text" name="counterparty" placeholder="Counterparty" required />
+                    <input type="datetime-local" name="time" required />
+                    <select name="category" required >
+                        <CategoryOptions />
+                    </select>
+                </div>
 
-                {/* Do a patch / post here */}
-                <button type="submit">Save & Close</button>
-                
-                {/* Close without saving */}
-                <button onClick={() => setModalVisible(false)}>Close</button>
+                <div className="form-buttons">
+                    {/* Do a patch / post here */}
+                    <button type="submit">Save & Close</button>
+                    
+                    {/* Close without saving */}
+                    <button onClick={() => setModalVisible(false)}>Close</button>
+                </div>
             </form>
         </>
     );

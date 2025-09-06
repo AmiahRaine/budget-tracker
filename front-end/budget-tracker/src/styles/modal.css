@@ -23,3 +23,34 @@
 
     min-width: 50%;
 }
+
+input {
+    background-color: rgb(236, 242, 248);
+    padding: 0.25rem;
+    margin: 0.25rem;
+    border-radius: 0.5rem;
+    border: 1px solid rgb(67, 67, 69);
+    color:rgb(70, 72, 72);
+}
+
+select {
+    background-color: rgb(236, 242, 248);
+    padding: 0.25rem;
+    margin: 0.25rem;
+    border-radius: 0.5rem;
+    border: 1px solid rgb(67, 67, 69);
+    color:rgb(70, 72, 72);
+}
+
+.input-fields {
+    display: flex;
+}
+
+.form-buttons {
+    display: flex;
+    justify-content: right;
+    gap: 0.25rem;
+
+    margin-right: 2.25rem;
+    margin-top: 1.5rem;
+}

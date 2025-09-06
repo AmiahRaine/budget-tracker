@@ -1,0 +1,11 @@
+.delete-button-container {
+    display: flex;
+
+    justify-content: right;
+    margin-right: 2.25rem;
+    margin-bottom: 1.5rem;
+}
+
+.confirm-delete-button {
+    background-color:rgb(108, 13, 13);
+}
