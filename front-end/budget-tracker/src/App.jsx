@@ -4,14 +4,17 @@ import { ExpenseModal } from './Modal.jsx';
 
 function App() {
     
-
     return (
         <>
-            <ExpenseModalProvider>
-                    
-                    <ExpenseModal />
-                    <Expenses />
-            </ExpenseModalProvider>
+            <aside>
+                
+            </aside>
+            <main>
+                <ExpenseModalProvider>
+                        <ExpenseModal />
+                        <Expenses />
+                </ExpenseModalProvider>
+            </main>
         </>
     )
 }
