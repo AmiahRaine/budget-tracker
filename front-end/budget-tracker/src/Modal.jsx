@@ -27,7 +27,6 @@ export function ExpenseModal() {
             <>
                 <div className="background">
                     <div className="modal-surface">
-                        <p>HI I AM THE MODAL POST</p>
 
                         <PostExpense />
 
