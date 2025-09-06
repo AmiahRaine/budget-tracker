@@ -71,15 +71,14 @@ public class Expense {
     }
 
     /**
-     * Creates a formatted version of the time of the transaction, which follows
-     * the user's date formatting preference.
+     * Creates a formatted version of the time of the transaction.
      *
-     * @param pref The preferences of the user who this expense belongs to.
-     * @return The time of the transaction, formatted to the user's preference.
+     * @return The time of the transaction, formatted to "MMM d yyyy"
      */
-    public String getTimeFormatted(UserPreference pref) {
+    @JsonProperty("timeFormatted")
+    public String getTimeFormatted() {
         if (time != null) {
-            return time.format(DateTimeFormatter.ofPattern(pref.getDatePatternComplete()));
+            return time.format(DateTimeFormatter.ofPattern("MMM. d, yyyy"));
         }
         // In practice, it should never get to this point because it is set in onPrePersist().
         // Although, it could happen if set to null afterward.
